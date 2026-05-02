@@ -1,0 +1,64 @@
+╔══════════════════════════════════════════════════════════════╗
+║       Vehicle Maintenance Scheduler — 0/1 Knapsack DP       ║
+╚══════════════════════════════════════════════════════════════╝
+
+Mechanic-hour budget: 10.0 hours
+Algorithm: 0/1 Knapsack DP — O(N * W) time
+
+── Step 1: Fetching depots ──────────────────────────────────────
+  ⚠  API unavailable (API /depots returned status 403: Host not in allowlist)
+  Using sample depot data.
+
+  Depot: depot-001 — Mumbai Central Depot
+  Depot: depot-002 — Pune East Depot
+
+── Step 2: Fetching maintenance tasks ───────────────────────────
+  ⚠  API unavailable (API /depots/depot-001/tasks returned status 403: Host not in allowlist)
+  Using sample task data.
+
+  Total tasks available: 15
+
+  TaskID  Duration  Score     Description                             
+  ──────────────────────────────────────────────────────────────────────
+  t-01       1.0h      60   Oil change & filter replacement         
+  t-02       2.0h     100   Brake inspection & pad replacement      
+  t-03       3.5h     150   Engine diagnostic & tune-up             
+  t-04       1.5h      80   Tyre rotation & balancing               
+  t-05       2.5h     120   Transmission fluid flush                
+  t-06       4.0h     160   Full body inspection                    
+  t-07       0.5h      40   Battery replacement                     
+  t-08       2.0h      90   Coolant system flush                    
+  t-09       0.5h      30   Air filter replacement                  
+  t-10       3.0h     140   Suspension & steering check             
+  t-11       2.5h     110   Exhaust system repair                   
+  t-12       1.5h      70   AC system service                       
+  t-13       1.0h      50   Headlight & electrical check            
+  t-14       2.0h      95   Fuel injector cleaning                  
+  t-15       0.5h      20   Windshield wiper replacement            
+
+── Step 3: Running 0/1 Knapsack DP ─────────────────────────────
+  N = 15 tasks,  W = 10.0h budget (100 scaled units)
+
+┌─────────────────────────────────────────────────────────────────┐
+│  OPTIMAL MAINTENANCE SCHEDULE                                   │
+└─────────────────────────────────────────────────────────────────┘
+
+  Budget:            10.0 hours
+  Total duration:    10.0 hours  (100.0% utilisation)
+  Remaining:          0.0 hours
+  Total score:        525  (maximum achievable)
+
+  TaskID  Duration  Score     Description                             
+  ──────────────────────────────────────────────────────────────────────
+  t-05       2.5h     120   Transmission fluid flush                
+  t-02       2.0h     100   Brake inspection & pad replacement      
+  t-14       2.0h      95   Fuel injector cleaning                  
+  t-04       1.5h      80   Tyre rotation & balancing               
+  t-01       1.0h      60   Oil change & filter replacement         
+  t-07       0.5h      40   Battery replacement                     
+  t-09       0.5h      30   Air filter replacement                  
+
+── Complexity analysis ──────────────────────────────────────────
+  Time:  O(N * W) = O(15 * 100) = O(1500) operations
+  Space: O(N * W) = O(1616) DP table entries
+  Suitable for real-world scale: N=1000 tasks, W=480h budget → ~480K ops
