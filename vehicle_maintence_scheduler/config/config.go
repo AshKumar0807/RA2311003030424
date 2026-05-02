@@ -3,7 +3,8 @@ package config
 import (
 	"fmt"
 	"os"
-	logging "github.com/student/ROLL_NUMBER/logging_middleware"
+
+	logging "github.com/AshKumar0807/RA2311003030424/logging_middleware"
 )
 
 type Config struct {

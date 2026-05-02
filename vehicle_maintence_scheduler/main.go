@@ -9,11 +9,11 @@ import (
 	"os"
 	"strings"
 
-	logging "github.com/student/ROLL_NUMBER/logging_middleware"
-	"github.com/student/ROLL_NUMBER/vehicle_maintenance_scheduler/config"
-	"github.com/student/ROLL_NUMBER/vehicle_maintenance_scheduler/domain"
-	"github.com/student/ROLL_NUMBER/vehicle_maintenance_scheduler/repository"
-	"github.com/student/ROLL_NUMBER/vehicle_maintenance_scheduler/service"
+	logging "github.com/AshKumar0807/RA2311003030424/logging_middleware"
+	"github.com/AshKumar0807/RA2311003030424/vehicle_maintence_scheduler/config"
+	"github.com/AshKumar0807/RA2311003030424/vehicle_maintence_scheduler/domain"
+	"github.com/AshKumar0807/RA2311003030424/vehicle_maintence_scheduler/repository"
+	"github.com/AshKumar0807/RA2311003030424/vehicle_maintence_scheduler/service"
 )
 
 var (
@@ -68,11 +68,13 @@ func router(w http.ResponseWriter, r *http.Request) {
 func createVehicle(w http.ResponseWriter, r *http.Request) {
 	var req domain.CreateVehicleRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		errJSON(w, 400, "invalid JSON: "+err.Error()); return
+		errJSON(w, 400, "invalid JSON: "+err.Error())
+		return
 	}
 	v, err := svc.RegisterVehicle(req)
 	if err != nil {
-		errJSON(w, 422, err.Error()); return
+		errJSON(w, 422, err.Error())
+		return
 	}
 	writeJSON(w, 201, v)
 }
@@ -83,7 +85,10 @@ func listVehicles(w http.ResponseWriter, r *http.Request) {
 
 func getVehicle(w http.ResponseWriter, r *http.Request, id string) {
 	v, err := svc.GetVehicle(id)
-	if err != nil { errJSON(w, 404, err.Error()); return }
+	if err != nil {
+		errJSON(w, 404, err.Error())
+		return
+	}
 	writeJSON(w, 200, v)
 }
 
@@ -99,28 +104,42 @@ func createJob(w http.ResponseWriter, r *http.Request) {
 		Notes       string `json:"notes"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&raw); err != nil {
-		errJSON(w, 400, "invalid JSON: "+err.Error()); return
+		errJSON(w, 400, "invalid JSON: "+err.Error())
+		return
 	}
 	req, err := domain.ParseScheduleJobRequest(raw.VehicleID, raw.Type, raw.ScheduledAt, raw.Notes)
-	if err != nil { errJSON(w, 400, err.Error()); return }
+	if err != nil {
+		errJSON(w, 400, err.Error())
+		return
+	}
 	job, err := svc.ScheduleJob(req)
-	if err != nil { errJSON(w, 422, err.Error()); return }
+	if err != nil {
+		errJSON(w, 422, err.Error())
+		return
+	}
 	writeJSON(w, 201, job)
 }
 
 func getJob(w http.ResponseWriter, r *http.Request, id string) {
 	job, err := svc.GetJob(id)
-	if err != nil { errJSON(w, 404, err.Error()); return }
+	if err != nil {
+		errJSON(w, 404, err.Error())
+		return
+	}
 	writeJSON(w, 200, job)
 }
 
 func updateJobStatus(w http.ResponseWriter, r *http.Request, id string) {
 	var req domain.UpdateJobStatusRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		errJSON(w, 400, "invalid JSON: "+err.Error()); return
+		errJSON(w, 400, "invalid JSON: "+err.Error())
+		return
 	}
 	job, err := svc.UpdateJobStatus(id, req)
-	if err != nil { errJSON(w, 422, err.Error()); return }
+	if err != nil {
+		errJSON(w, 422, err.Error())
+		return
+	}
 	writeJSON(w, 200, job)
 }
 

@@ -3,7 +3,7 @@
 //
 // Usage:
 //
-//	import "github.com/student/logging_middleware"
+//	import "github.com/AshKumar0807/RA2311003030424/logging_middleware"
 //
 //	logging.SetAPIKey("your-key")
 //	logging.Log("backend", "info", "handler", "Request received for /health")
@@ -142,7 +142,7 @@ func (l *Logger) logTo(endpoint, stack, level, pkg, message string) (string, err
 	// Normalise to lower-case
 	stack = strings.ToLower(strings.TrimSpace(stack))
 	level = strings.ToLower(strings.TrimSpace(level))
-	pkg   = strings.ToLower(strings.TrimSpace(pkg))
+	pkg = strings.ToLower(strings.TrimSpace(pkg))
 
 	// Validate fields before hitting the network
 	if err := validate(stack, level, pkg); err != nil {
@@ -195,11 +195,21 @@ func (l *Logger) logTo(endpoint, stack, level, pkg, message string) (string, err
 }
 
 // Convenience helpers — call Log with "backend" stack pre-filled.
-func (l *Logger) Debug(pkg, message string) (string, error) { return l.Log("backend", "debug", pkg, message) }
-func (l *Logger) Info(pkg, message string) (string, error)  { return l.Log("backend", "info", pkg, message) }
-func (l *Logger) Warn(pkg, message string) (string, error)  { return l.Log("backend", "warn", pkg, message) }
-func (l *Logger) Error(pkg, message string) (string, error) { return l.Log("backend", "error", pkg, message) }
-func (l *Logger) Fatal(pkg, message string) (string, error) { return l.Log("backend", "fatal", pkg, message) }
+func (l *Logger) Debug(pkg, message string) (string, error) {
+	return l.Log("backend", "debug", pkg, message)
+}
+func (l *Logger) Info(pkg, message string) (string, error) {
+	return l.Log("backend", "info", pkg, message)
+}
+func (l *Logger) Warn(pkg, message string) (string, error) {
+	return l.Log("backend", "warn", pkg, message)
+}
+func (l *Logger) Error(pkg, message string) (string, error) {
+	return l.Log("backend", "error", pkg, message)
+}
+func (l *Logger) Fatal(pkg, message string) (string, error) {
+	return l.Log("backend", "fatal", pkg, message)
+}
 
 // New is an alias for NewLogger for convenient instantiation.
 func New(apiKey string) *Logger { return NewLogger(apiKey) }

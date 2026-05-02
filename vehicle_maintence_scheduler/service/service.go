@@ -3,9 +3,10 @@ package service
 import (
 	"fmt"
 	"time"
-	logging "github.com/student/ROLL_NUMBER/logging_middleware"
-	"github.com/student/ROLL_NUMBER/vehicle_maintenance_scheduler/domain"
-	"github.com/student/ROLL_NUMBER/vehicle_maintenance_scheduler/repository"
+
+	logging "github.com/AshKumar0807/RA2311003030424/logging_middleware"
+	"github.com/AshKumar0807/RA2311003030424/vehicle_maintence_scheduler/domain"
+	"github.com/AshKumar0807/RA2311003030424/vehicle_maintence_scheduler/repository"
 )
 
 type Service struct {
@@ -98,11 +99,21 @@ func (s *Service) UpdateJobStatus(id string, req domain.UpdateJobStatusRequest) 
 }
 
 func (s *Service) validateVehicleRequest(req domain.CreateVehicleRequest) error {
-	if req.OwnerName == "" { return fmt.Errorf("owner_name is required") }
-	if req.RegistrationNo == "" { return fmt.Errorf("registration_no is required") }
-	if req.Make == "" { return fmt.Errorf("make is required") }
-	if req.Model == "" { return fmt.Errorf("model is required") }
-	if req.Year < 1900 || req.Year > time.Now().Year()+1 { return fmt.Errorf("year %d is out of valid range", req.Year) }
+	if req.OwnerName == "" {
+		return fmt.Errorf("owner_name is required")
+	}
+	if req.RegistrationNo == "" {
+		return fmt.Errorf("registration_no is required")
+	}
+	if req.Make == "" {
+		return fmt.Errorf("make is required")
+	}
+	if req.Model == "" {
+		return fmt.Errorf("model is required")
+	}
+	if req.Year < 1900 || req.Year > time.Now().Year()+1 {
+		return fmt.Errorf("year %d is out of valid range", req.Year)
+	}
 	return nil
 }
 
@@ -111,8 +122,12 @@ func (s *Service) validateJobRequest(req domain.ScheduleJobRequest) error {
 		domain.TypeOilChange: true, domain.TypeTyreRotation: true,
 		domain.TypeBrakeInspect: true, domain.TypeGeneralService: true, domain.TypeEngineCheck: true,
 	}
-	if !valid[req.Type] { return fmt.Errorf("unknown maintenance type: %q", req.Type) }
-	if req.ScheduledAt.Before(time.Now()) { return fmt.Errorf("scheduled_at must be a future time") }
+	if !valid[req.Type] {
+		return fmt.Errorf("unknown maintenance type: %q", req.Type)
+	}
+	if req.ScheduledAt.Before(time.Now()) {
+		return fmt.Errorf("scheduled_at must be a future time")
+	}
 	return nil
 }
 
@@ -123,7 +138,9 @@ func (s *Service) validateStatusTransition(from, to domain.MaintenanceStatus) er
 		domain.StatusInProgress: {domain.StatusCompleted, domain.StatusCancelled},
 	}
 	for _, valid := range allowed[from] {
-		if valid == to { return nil }
+		if valid == to {
+			return nil
+		}
 	}
 	return fmt.Errorf("cannot transition job from %q to %q", from, to)
 }

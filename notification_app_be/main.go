@@ -9,9 +9,9 @@ import (
 	"os"
 	"strings"
 
-	logging "github.com/student/ROLL_NUMBER/logging_middleware"
-	"github.com/student/ROLL_NUMBER/notification_app_be/domain"
-	"github.com/student/ROLL_NUMBER/notification_app_be/service"
+	logging "github.com/AshKumar0807/RA2311003030424/logging_middleware"
+	"github.com/AshKumar0807/RA2311003030424/notification_app_be/domain"
+	"github.com/AshKumar0807/RA2311003030424/notification_app_be/service"
 )
 
 var (
@@ -39,9 +39,15 @@ func router(w http.ResponseWriter, r *http.Request) {
 
 	case path == "/api/v1/notifications" && r.Method == http.MethodPost:
 		var req domain.SendNotificationRequest
-		if err := json.NewDecoder(r.Body).Decode(&req); err != nil { errJSON(w, 400, err.Error()); return }
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			errJSON(w, 400, err.Error())
+			return
+		}
 		n, err := svc.Send(req)
-		if err != nil { errJSON(w, 422, err.Error()); return }
+		if err != nil {
+			errJSON(w, 422, err.Error())
+			return
+		}
 		writeJSON(w, 201, n)
 
 	case path == "/api/v1/notifications" && r.Method == http.MethodGet:
@@ -50,7 +56,10 @@ func router(w http.ResponseWriter, r *http.Request) {
 	case strings.HasPrefix(path, "/api/v1/notifications/") && r.Method == http.MethodGet:
 		id := strings.TrimPrefix(path, "/api/v1/notifications/")
 		n, err := svc.GetNotification(id)
-		if err != nil { errJSON(w, 404, err.Error()); return }
+		if err != nil {
+			errJSON(w, 404, err.Error())
+			return
+		}
 		writeJSON(w, 200, n)
 
 	default:
@@ -63,7 +72,9 @@ func main() {
 	logger.Info("config", "notification app backend starting up")
 
 	port := os.Getenv("PORT")
-	if port == "" { port = "8081" }
+	if port == "" {
+		port = "8081"
+	}
 	svc = service.New(logger)
 
 	addr := ":" + port
