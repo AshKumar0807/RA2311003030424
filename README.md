@@ -11,13 +11,13 @@ RA2311003030424/
 │   ├── config/      domain/
 │   ├── handler/     middleware/
 │   ├── repository/  service/
-│   ├── notification_system_design.md
 │   └── main.go  (port 8080)
 ├── notification_app_be/              # Notification delivery service
 │   ├── domain/  handler/  service/
 │   └── main.go  (port 8081)
 ├── go.mod
 ├── .gitignore
+├── notification_system_design.md
 └── README.md
 ```
 
