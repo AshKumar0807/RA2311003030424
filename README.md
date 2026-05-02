@@ -7,7 +7,7 @@ RA2311003030424/
 ├── logging_middleware/               # Reusable Go logging package(log middle ware)
 │   ├── logger.go                     # Core Log() + convenience helpers
 │   └── logger_test.go
-├── vehicle_maintenance_scheduler/    # Vehicle maintenance REST API
+├── vehicle_maintence_scheduler/    # Vehicle maintence REST API
 │   ├── config/      domain/
 │   ├── handler/     middleware/
 │   ├── repository/  service/
@@ -28,7 +28,7 @@ git clone https://github.com/AshKumar0807/RA2311003030424 && cd RA2311003030424
 go mod tidy
 
 # Vehicle Scheduler
-LOG_API_TOKEN=<token> go run ./vehicle_maintenance_scheduler/main.go
+LOG_API_TOKEN=<token> go run ./vehicle_maintence_scheduler/main.go
 
 # Notification Backend
 LOG_API_TOKEN=<token> go run ./notification_app_be/main.go
